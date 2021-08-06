@@ -50,3 +50,9 @@ def get_single_user(uid):
     }
     out["body"] = select(uid)
     return out
+
+
+@app.route('/agent')
+def agent():
+    user_agent = request.headers.get("Users-Agent")
+    return "<p> Your user agent is: %s</p>" % user_agent
