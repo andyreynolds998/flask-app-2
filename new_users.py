@@ -1,9 +1,9 @@
-from app.routes import db, User
+from app.routes import db, user
 
 
 def create_my_user(first_name, last_name, hobbies):
     db.session.add(
-        User(
+        user(
             first_name=first_name,
             last_name=last_name,
             hobbies=hobbies
@@ -14,8 +14,8 @@ def create_my_user(first_name, last_name, hobbies):
 
 if __name__ == "__main__":
     create_my_user("Andrew", "Reynolds", "Video games")
-    users = User.query.all()
+    users = user.query.all()
     print(users)
     create_my_user("John", "Doe", "Playing golf")
-    user = User.query.filter_by(first_name="John").first()
-    print(user)
+    obj = user.query.filter_by(first_name="John").first()
+    print(obj)

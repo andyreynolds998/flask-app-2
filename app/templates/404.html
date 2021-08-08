@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {%endblock title %}
+
+{% block content %}
+
+
+<img class="errorIMG" src={{ url_for('static', filename='images/error.jfif')}}>
+<p class="errorMessage"> Hey pal, you're not supposed to be here </p>
+
+
+{% endblock content %}

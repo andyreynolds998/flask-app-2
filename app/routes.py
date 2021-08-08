@@ -1,10 +1,32 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite://mydb.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydb.db"
 db = SQLAlchemy(app)
-from app.database import User
+
+
+from app.database import user
+
+
+@app.route("/")
+def index():
+    username = "John" # jinja template uses if else statement to give the user a message based on their name
+    return render_template("index.html", name=username)
+
+@app.route("/greet/<username>")
+def greeting(username):
+    return render_template("index.html", name=username)
+
+@app.route("/users/<int:uid>/profiles")
+def get_profile(uid):
+    obj = user.query.filter_by(id=uid).first()
+    return render_template("user_profile.html", user=obj)
+
+@app.route("/users/profiles")
+def list_users():
+    list_of_users = user.query.all()
+    return render_template("profile_list.html", users=list_of_users)
 
 @app.route("/users")
 def get_all_users():
@@ -58,3 +80,10 @@ def get_single_user(uid):
 def agent():
     user_agent = request.headers.get("Users-Agent")
     return "<p> Your user agent is: %s</p>" % user_agent
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
+    
+
+

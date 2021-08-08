@@ -9,4 +9,4 @@ class user(db.Model):
     active = db.Column(db.Boolean, nullable=False, default=1)
 
     def __repr__(self):
-        return "<User %r>" % self.first_name
+        return "<user %r>" % self.first_name
